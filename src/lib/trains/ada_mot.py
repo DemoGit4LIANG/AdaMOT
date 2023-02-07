@@ -18,17 +18,3 @@ class AdaMotTrainer(BaseTrainer):
 
     def save_result(self, output, batch, results):
         pass
-
-
-# class AdaMotTrainer(BaseTrainer):
-#     def __init__(self, opt, matcher, model, optimizer=None):
-#         self.matcher = matcher
-#         super(AdaMotTrainer, self).__init__(opt, model, optimizer=optimizer)
-#
-#     def _get_losses(self, opt):
-#         loss_states = ['loss', 'cls_loss', 'l1_loss', 'giou_loss', 'id_loss']
-#         loss_fn = AdaMotLoss(opt, matcher=self.matcher)
-#         return loss_states, loss_fn
-#
-#     def save_result(self, output, batch, results):
-#         pass

@@ -131,8 +131,7 @@ class IdentityAwareLabelAssignment(nn.Module):
             # TODO: compute the cls losses, using focal loss
             cls_cost = pos_cls_cost[:, gt_cls] - neg_cls_cost[:, gt_cls]  # [HW, num_gt]
             if self.id_aware:
-                cls_cost = 0.75 * cls_cost + 0.25 * iw_cls_cost
-                # cls_cost = 1 * cls_cost + 0 * iw_cls_cost
+                cls_cost = 0.5 * cls_cost + 0.5 * iw_cls_cost
             # TODO: L1 box losses
             '''
                 Note here
@@ -171,32 +170,6 @@ class IdentityAwareLabelAssignment(nn.Module):
                     id_preds = id_classifier(id_emd_norm_scale).contiguous()
 
                     id_aware_w = torch.softmax(id_preds, dim=1)[:, _id]
-
-                    # max_ind = cls_pred[group_by_id].argmax()
-                    # max_cls_score = cls_pred[group_by_id][max_ind]
-                    # max_id_score = id_aware_w[max_ind]
-                    #
-                    # if torch.abs(max_cls_score - max_id_score) > 0.2:
-                    #     if random.random() > 0.5:
-                    #         with open('./id_score.txt', 'a') as id_f:
-                    #             np.savetxt(id_f, max_id_score.view(1, -1).cpu().numpy(), delimiter=',', fmt='%.4f')
-                    #         with open('./cls_score.txt', 'a') as cls_f:
-                    #             np.savetxt(cls_f, max_cls_score.view(1, -1).cpu().numpy(), delimiter=',', fmt='%.4f')
-                    #
-                    #         self.tmp_cnt += 1
-                    #         if self.tmp_cnt > 2000:
-                    #             raise Exception
-                    # else:
-                    #     with open('./id_score.txt', 'a') as id_f:
-                    #         np.savetxt(id_f, max_id_score.view(1, -1).cpu().numpy(), delimiter=',', fmt='%.4f')
-                    #     with open('./cls_score.txt', 'a') as cls_f:
-                    #         np.savetxt(cls_f, max_cls_score.view(1, -1).cpu().numpy(), delimiter=',', fmt='%.4f')
-                    #
-                    #     self.tmp_cnt += 1
-                    #     if self.tmp_cnt > 2000:
-                    #         raise Exception
-
-
                     id_aware_src_inds.append(group_by_id)
                     id_aware_weights.append(torch.sigmoid(id_aware_w))
 
