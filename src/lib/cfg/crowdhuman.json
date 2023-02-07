@@ -1,0 +1,16 @@
+{
+    "root":"/home/allen/data/datasets/mot/JDE",
+    "train":
+    {
+        "crowdhuman_train":"src/data/crowdhuman.train",
+        "crowdhuman_test":"src/data/crowdhuman.val"
+    },
+    "test_emb":
+    {
+        "mot15":"./data/mot15.val"
+    },
+    "test":
+    {
+        "mot15":"./data/mot15.val"
+    }
+}

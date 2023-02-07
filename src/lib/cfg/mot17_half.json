@@ -1,0 +1,15 @@
+{
+    "root":"/home/allen/data/datasets/mot/JDE/MIX",
+    "train":
+    {
+        "mot17":"src/data/mot17.half"
+    },
+    "test_emb":
+    {
+        "mot17":"src/data/mot17.emb"
+    },
+    "test":
+    {
+        "mot17":"src/data/mot17.val"
+    }
+}

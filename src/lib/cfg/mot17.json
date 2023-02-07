@@ -1,0 +1,15 @@
+{
+    "root":"/data/datasets/mot",
+    "train":
+    {
+        "mot17":"src/data/mot17.train"
+    },
+    "test_emb":
+    {
+        "mot17":"src/data/mot17.train"
+    },
+    "test":
+    {
+        "mot17":"src/data/mot17.train"
+    }
+}
