@@ -1,5 +1,5 @@
 # AdaMOT
-Codes for the TIP paper "A closer look at the joint training of object detection and Re-identification in multi-object tracking"  
+Codes for the paper "A closer look at the joint training of object detection and Re-identification in multi-object tracking" (IEEE Transactions on Image Processing, 2022)
 
 ![Alt text](https://raw.githubusercontent.com/DemoGit4LIANG/AdaMOT/main/Screenshots/main1.png)
 
