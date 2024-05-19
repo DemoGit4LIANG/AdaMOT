@@ -266,14 +266,6 @@ def focal_loss_logits(preds, targets, alpha=0.25, gamma=2.0, reduction='sum'):
     pos_loss = alpha * ((1 - preds) ** gamma) * (-(preds + 1e-8).log()) * pos_mask
     neg_loss = (1 - alpha) * (preds ** gamma) * (-(1 - preds + 1e-8).log()) * neg_mask
 
-    with open('./cls.txt', 'a') as f_cls:
-        cls_score = preds[targets > 0.]
-        np.savetxt(f_cls, cls_score.detach().cpu().numpy(), delimiter=',', fmt='%.4f')
-
-    with open('./pos_loss.txt', 'a') as f_pos_loss:
-        p_loss = pos_loss[targets > 0.]
-        np.savetxt(f_pos_loss, p_loss.detach().cpu().numpy(), delimiter=',', fmt='%.4f')
-
     total_loss = pos_loss + neg_loss
 
     return torch.sum(total_loss) if reduction == 'sum' else total_loss
@@ -322,47 +314,5 @@ def discriminative_focal_loss(preds, targets, gamma=2.0, reduction='sum', cnt=0)
     pos_loss = ((targets * (1. - preds)) ** gamma) * (-torch.log(preds + 1e-8)) * pos_mask
     neg_loss = beta * (preds ** gamma) * (-torch.log(1 - preds + 1e-8)) * neg_mask
     total_loss = 1 / (alpha + beta) * (pos_loss + neg_loss)
-
-    # def re_sigmoid(x):
-    #     return -torch.log((1 - x) / x)
-    #
-    # cls_score = preds[targets > 0.]
-    # p_loss = pos_loss[targets > 0.]
-    # p_targets = targets[pos_mask > 0.]
-    # p_targets = re_sigmoid(p_targets)
-
-    # if random.random() > 0.2:
-    #     m1 = p_targets > 0.5
-    #     cls_score = cls_score[m1]
-    #     p_loss = p_loss[m1]
-    #     p_targets = p_targets[m1]
-    #
-    #     m2 = p_loss > 0.6
-    #     cls_score = cls_score[m2]
-    #     p_loss = p_loss[m2]
-    #     p_targets = p_targets[m2]
-
-        # m2 = torch.abs(p_targets - p_loss) < 0.4
-        # cls_score = cls_score[m2]
-        # p_loss = p_loss[m2]
-        # p_targets = p_targets[m2]
-
-    # with open('./idw_cls.txt', 'a') as f_idw_cls:
-    #     # cls_score = preds[targets > 0.]
-    #     np.savetxt(f_idw_cls, cls_score.detach().cpu().numpy(), delimiter=',', fmt='%.4f')
-    #
-    # with open('./idw_pos_loss.txt', 'a') as f_idw_pos_loss:
-    #     # p_loss = pos_loss[targets > 0.]
-    #     np.savetxt(f_idw_pos_loss, p_loss.detach().cpu().numpy(), delimiter=',', fmt='%.4f')
-    #
-    # with open('./idw_reid_score.txt', 'a') as f_idw_reid_score:
-    #     # p_targets = targets[pos_mask > 0.]
-    #     # p_targets = re_sigmoid(p_targets)
-    #     np.savetxt(f_idw_reid_score, p_targets.detach().cpu().numpy(), delimiter=',', fmt='%.4f')
-    #
-    # cnt += len(cls_score)
-    # if cnt > 2000:
-    #     raise Exception()
-
 
     return torch.sum(total_loss) if reduction == 'sum' else total_loss, cnt
